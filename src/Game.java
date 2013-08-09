@@ -6,6 +6,8 @@ public class Game {
         boolean checkX = true;
         boolean checkO = true;
 
+        //могу ошибаться, но с первого взгляда это обход по горизонталям
+        //0,0   0,1  0,2,  1,0   1,1  1,2...
         //check vertical lines:
         for(int i = 0; i < Field.FIELD_SIZE; i++){
             for(int j = 0; j < Field.FIELD_SIZE; j++){
@@ -22,6 +24,7 @@ public class Game {
             }
         }
 
+        //а это наоброт по вертикалям 0,0  1,0  2,0....
         //check horizontal lines:
         for(int i = 0; i < Field.FIELD_SIZE; i++){
             for(int j = 0; j < Field.FIELD_SIZE; j++){
@@ -59,6 +62,12 @@ public class Game {
                 return true;
             }
 
+            //тут, я понимаю Вы ищете незаполненную клетку, и если находите то получается что ничья
+            // возможно имеет смысле сделать две логические переменные  boolean cross = false и boolean nought = false
+            //и в предыдущих циклах проверки устанавливать одну из них в true, а тут проверять если ни одна из них не true
+            //то ничья, приврно так
+            //if(!cross && !nought)
+                //System.out.println("Tie!");
             //check for tie:
             for(int i = 0; i < Field.FIELD_SIZE; i++){
                 for(int j = 0; j < Field.FIELD_SIZE; j++){
@@ -84,8 +93,11 @@ public class Game {
         while(true){
             System.out.print("Enter x and y for ");
             System.out.print(field.cross ? "\"X\":\n" : "\"O\":\n");
+            //вот тут можете добавить проверку на ввод не числа (буква, например, или еще какой либо символ)
+            //посмотрите функцию sc.hasNextInt(), с ее помощью можно реализоват проверку
             x = sc.nextInt() - 1;
             y = sc.nextInt() - 1;
+            //вот тут можно будет вызывать field.getFieldCell(x,y, 'X')
             if (field.getFieldCell(x,y) == ' ') {
                 field.setFieldCell(x,y);
             }
